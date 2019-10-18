@@ -1,7 +1,7 @@
 {
   "name": "win-audio",
   "version": "2.0.2",
-  "description": "Get, Set and Watch Speaker/Microphone Volume on Windows",
+  "description": "Get and Set Windows Audio, including audio sessions for process names and pids",
   "main": "dist/index.js",
   "os": [
     "win32"
@@ -12,17 +12,17 @@
     "rebuild:dev": "node-gyp build --debug",
     "rebuild": "node-gyp build"
   },
-  "author": "Francesco Cannizzaro <francescosaverio.cannizzaro@gmail.com>",
+  "author": "Kaibu <notkaibu@gmail.com>",
   "license": "MIT",
   "gypfile": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fcannizzaro/win-audio.git"
+    "url": "git+https://github.com/Kaibu/win-audio.git"
   },
   "bugs": {
-    "url": "https://github.com/fcannizzaro/win-audio/issues"
+    "url": "https://github.com/Kaibu/win-audioissues"
   },
-  "homepage": "https://github.com/fcannizzaro/win-audio#readme",
+  "homepage": "https://github.com/Kaibu/win-audio#readme",
   "keywords": [
     "audio",
     "microphone",
