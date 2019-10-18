@@ -3,6 +3,7 @@ logs
 *.log
 npm-debug.log*
 package-lock.json
+sample.js
 
 # Runtime data
 pids
@@ -39,3 +40,9 @@ jspm_packages
 
 dist
 build
+
+.idea/
+
+.vscode/
+
+.vs/

@@ -1,13 +1,13 @@
 const EventEmitter = require('events');
-const audio = require('../build/Release/audio.node');
+const audio = require('../build/Debug/audio.node');
 
 var init = (mic) => {
 
   const events = new EventEmitter();
 
   var data = {
-    audio: audio.get(mic),
-    status: audio.isMuted(mic)
+    audio: audio.getMaster(mic),
+    status: audio.isMasterMuted(mic)
   };
 
   /**
@@ -36,42 +36,42 @@ var init = (mic) => {
    * Check and update current volume.
    */
   var check = () => {
-    _check(audio.get, 'audio', 'change');
-    _check(audio.isMuted, 'status', 'toggle');
+    _check(audio.getMaster, 'audio', 'change');
+    _check(audio.isMasterMuted, 'status', 'toggle');
   };
 
   /**
    * Get current audio
    */
-  var get = () => audio.get(mic);
+  var getMaster = () => audio.getMaster(mic);
 
   /**
    * Update current and delegate audio set to native module.
    */
-  var set = (value) => {
-    audio.set(value, mic);
+  var setMaster = (value) => {
+    audio.setMaster(value, mic);
     check();
   };
 
   /**
    * Save current status and mute volume.
    */
-  var mute = () => audio.mute(mic, 1);
+  var muteMaster = () => audio.muteMaster(mic, 1);
 
 
   /**
    * Restore previous volume.
    */
-  var unmute = () => audio.mute(mic, 0);
+  var unmuteMaster = () => audio.muteMaster(mic, 0);
 
   /**
    * Mute/Unmute volume.
    */
   var toggle = () => {
-    if (audio.isMuted(mic))
-      unmute();
+    if (audio.isMasterMuted(mic))
+      unmuteMaster();
     else
-      mute();
+      muteMaster();
   };
 
   /**
@@ -84,7 +84,7 @@ var init = (mic) => {
    */
   var increase = (value) => {
 
-    unmute();
+    unmuteMaster();
 
     let perc = data.audio + value;
 
@@ -94,7 +94,7 @@ var init = (mic) => {
     if (perc > 100)
       perc = 100;
 
-    set(perc);
+    setMaster(perc);
 
   };
 
@@ -107,19 +107,87 @@ var init = (mic) => {
   /**
    * Check if is muted
    */
-  var isMuted = () => audio.isMuted(mic) == 1;
+  var isMasterMuted = () => audio.isMasterMuted(mic) == 1;
+
+  /**
+   * play/pause track
+   */
+  var playPause = () => audio.playPause();
+
+  /**
+   * stop track
+   */
+  var next = () => audio.next();
+
+  /**
+   * next track
+   */
+  var stop = () => audio.stop();
+
+  /**
+   * previous track
+   */
+  var previous = () => audio.previous();
+
+  /**
+   * previous track
+   */
+  var getApplicationPid = (pid) => audio.getApplicationPid(pid);
+
+  /**
+   * set volume for pid
+   */
+  var setApplicationPid = (pid, value) => audio.setApplicationPid(pid, value);
+
+   /**
+   * set volume for name
+   */
+  var setApplicationName = (name, value) => audio.setApplicationName(name, value);
+
+  /**
+   * set volume for name
+   */
+  var getApplicationName = (name) => audio.getApplicationName(name);
+
+  /**
+   * mute application by name
+   */
+  var setApplicationNameUnMute = (name) => audio.setApplicationNameMute(name, 1);
+
+
+  /**
+   * unmute application by name
+   */
+  var setApplicationNameMute = (name) => audio.setApplicationNameMute(name, 0);
+
+  /**
+   * Mute/Unmute volume.
+   */
+  var toggleApplicationNameMute = () => {
+    if (audio.setApplicationNameMute(name))
+      setApplicationNameUnMute(name);
+    else
+      setApplicationNameMute(name);
+  };
 
   return {
     events: events,
     polling: polling,
-    get: get,
-    set: set,
+    getMaster: getMaster,
+    setMaster: setMaster,
     increase: increase,
     decrease: decrease,
-    mute: mute,
-    unmute: unmute,
-    isMuted: isMuted,
-    toggle: toggle
+    getApplicationPid: getApplicationPid,
+    setApplicationPid: setApplicationPid,
+    setApplicationName: setApplicationName,
+    muteMaster: muteMaster,
+    unmuteMaster: unmuteMaster,
+    isMasterMuted: isMasterMuted,
+    toggle: toggle,
+    playPause: playPause,
+    next: next,
+    stop: stop,
+    previous: previous
   }
 
 }
