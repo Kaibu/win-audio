@@ -10,7 +10,6 @@
 #include <endpointvolume.h>
 #include <node_api.h>
 #include <psapi.h>
-#include <atlbase.h>
 #include <assert.h>
 #pragma once
 
