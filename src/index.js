@@ -1,5 +1,5 @@
 const EventEmitter = require('events');
-const audio = require('../build/Debug/audio.node');
+const audio = require('../build/Release/audio.node');
 
 var init = (mic) => {
 
